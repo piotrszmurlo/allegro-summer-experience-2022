@@ -3,11 +3,14 @@ from functools import reduce
 from operator import add
 from collections import Counter
 
+from urllib3 import disable_warnings
+
 API_URL = 'https://api.github.com'
 
-class GithubAPI():
+class GithubAPIWrapper():
 
-    def get_user_repo_details(self, username: str):
+
+    def get_user_repo_details(self, username: str) -> dict:
         """Returns user's repository details: repositories names with languages usage in bytes.
             Throws requests.exceptions.HTTPError if occurred in API call"""
         res = self._request_user_repos(username)
@@ -20,7 +23,7 @@ class GithubAPI():
         return user_repo_details
 
 
-    def get_user_details(self, username: str):
+    def get_user_details(self, username: str) -> dict:
         """Returns user's details: login, name, languages (aggregated) with usage in bytes.
             Throws requests.exceptions.HTTPError if occurred in API call"""
         res = self._request_user_details(username)
@@ -42,13 +45,13 @@ class GithubAPI():
         return user_details
 
 
-    def _request_user_repos(self, username: str):
-        return requests.get(f'{API_URL}/users/{username}/repos',)
+    def _request_user_repos(self, username: str) -> requests.Response:
+        return requests.get(f'{API_URL}/users/{username}/repos')
 
 
-    def _request_user_details(self, username: str):
+    def _request_user_details(self, username: str) -> requests.Response:
         return requests.get(f'{API_URL}/users/{username}')
 
 
-    def _get_languages(self, languages_url: str):
-        return requests.get(languages_url)
+    def _get_languages(self, languages_url: str) -> requests.Response:
+        return  requests.get(languages_url)
