@@ -20,10 +20,15 @@ def test_user_details():
 
 
 def test_user_details_nonexistent():
-    response = client.get('/user/piotrszmurlo')
+    response = client.get('/user/...')
     assert response.status_code in (403, 404)
 
 
 def test_repos_details():
     response = client.get('/repos/piotrszmurlo')
+    assert response.status_code in (200, 403)
+
+
+def test_repos_details_nonexistent():
+    response = client.get('/repos/...')
     assert response.status_code in (200, 403)

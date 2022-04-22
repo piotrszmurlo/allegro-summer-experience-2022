@@ -3,7 +3,6 @@ from functools import reduce
 from operator import add
 from collections import Counter
 
-from urllib3 import disable_warnings
 
 API_URL = 'https://api.github.com'
 
@@ -36,12 +35,14 @@ class GithubAPIWrapper():
         res = self._request_user_repos(username)
         res.raise_for_status()
         repo_details = []
-        for element in res.json():
-            languages = self._get_languages(element['languages_url'])
-            languages.raise_for_status()
-            repo_details.append(languages.json())
-        aggregated_repos_data = dict(reduce(add, map(Counter, repo_details)))
-        user_details['languages'] = aggregated_repos_data
+        res = res.json()
+        if res:
+            for element in res:
+                languages = self._get_languages(element['languages_url'])
+                languages.raise_for_status()
+                repo_details.append(languages.json())
+            aggregated_repos_data = dict(reduce(add, map(Counter, repo_details)))
+            user_details['languages'] = aggregated_repos_data
         return user_details
 
 
