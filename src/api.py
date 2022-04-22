@@ -2,12 +2,10 @@ import requests
 from functools import reduce
 from operator import add
 from collections import Counter
-from pprint import pprint
 
 API_URL = 'https://api.github.com'
 
 class GithubAPI():
-
 
     def get_user_repo_details(self, username: str):
         """Returns user's repository details: repositories names with languages usage in bytes.
@@ -45,12 +43,12 @@ class GithubAPI():
 
 
     def _request_user_repos(self, username: str):
-        return requests.get(f'{API_URL}/users/{username}/repos', auth=('user', 'pass'))
+        return requests.get(f'{API_URL}/users/{username}/repos',)
 
 
     def _request_user_details(self, username: str):
-        return requests.get(f'{API_URL}/users/{username}', auth=('user', 'pass'))
+        return requests.get(f'{API_URL}/users/{username}')
 
 
     def _get_languages(self, languages_url: str):
-        return requests.get(languages_url, auth=('user', 'pass'))
+        return requests.get(languages_url)
