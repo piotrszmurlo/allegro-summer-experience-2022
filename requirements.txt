@@ -1,3 +1,4 @@
 requests
-"fastapi[all]"
+fastapi[all]
 responses
+pytest
