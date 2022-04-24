@@ -45,3 +45,5 @@ Caching Github API's responses
 Sending requests in an asynchronous manner to get the results faster
 
 More tests covering all corner cases 
+
+More elegant way of providing Personal Access Token
