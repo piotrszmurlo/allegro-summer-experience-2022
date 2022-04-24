@@ -2,8 +2,10 @@ from requests.exceptions import HTTPError
 from api import GithubAPIWrapper
 from fastapi import FastAPI, HTTPException
 
+
 app = FastAPI()
 api = GithubAPIWrapper()
+
 
 @app.get('/')
 async def root():

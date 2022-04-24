@@ -2,9 +2,8 @@ import requests
 from functools import reduce
 from operator import add
 from collections import Counter
+from constants import API_KEY, API_URL
 
-
-API_URL = 'https://api.github.com'
 
 class GithubAPIWrapper():
 
@@ -47,12 +46,12 @@ class GithubAPIWrapper():
 
 
     def _request_user_repos(self, username: str) -> requests.Response:
-        return requests.get(f'{API_URL}/users/{username}/repos')
+        return requests.get(f'{API_URL}/users/{username}/repos', headers={'Authorization': f'token {API_KEY}'})
 
 
     def _request_user_details(self, username: str) -> requests.Response:
-        return requests.get(f'{API_URL}/users/{username}')
+        return requests.get(f'{API_URL}/users/{username}', headers={'Authorization': f'token {API_KEY}'})
 
 
     def _get_languages(self, languages_url: str) -> requests.Response:
-        return  requests.get(languages_url)
+        return  requests.get(languages_url, headers={'Authorization': f'token {API_KEY}'})
